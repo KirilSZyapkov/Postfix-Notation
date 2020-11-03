@@ -1,0 +1,47 @@
+function jansNotation(input) {
+
+    let operande = [];
+    let result = 0;
+    let isLessOperande = false;
+
+    for (let element of input) {
+        let operations = [];
+        element += "";
+        if (element.match(/\d/g)) {
+            operande.push(Number(element));
+        } else {
+            operations.push(element);
+            while (operations.length !== 0) {
+                let operate = operations.shift()
+                let y = operande.pop();
+                let x = operande.pop();
+                if (y === undefined || x === undefined) {
+                    isLessOperande = true;
+                    break;
+                }
+                switch (operate) {
+                    case "+": result = x + y; break;
+                    case "-": result = x - y; break;
+                    case "*": result = x * y; break;
+                    case "/": result = x / y; break;
+                    default: break;
+                }
+                operande.push(result);
+
+            }
+
+        }
+        if (isLessOperande) {
+            break;
+        }
+
+    }
+    if (isLessOperande) {
+        console.log("Error: not enough operands!");
+    } else if (operande.length > 1) {
+        console.log("Error: too many operands!");
+    } else {
+        console.log(operande.join(` `));
+    }
+
+}
